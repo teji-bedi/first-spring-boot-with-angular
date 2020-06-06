@@ -1,0 +1,25 @@
+<div class="container position-relative" style="margin-top: 150px;">
+  <div class="form-group">
+    <label for="userName">User Name</label>
+    <input type="text" class="form-control" id="userName" placeholder="Demo User" [(ngModel)]="userName">
+  </div>
+
+  <div class="form-group">
+    <button type="submit" (click)="getMessagesFromFollowing()" class="btn btn-primary">Show Me Timeline From My Friends</button>
+  </div>
+
+  <div *ngIf="alertMessage">
+    <div class="alert alert-danger" role="alert" *ngIf="(alertMessage.alertStatus === 'danger')">
+      {{alertMessage.alertMessage}}
+    </div>
+
+  <div *ngIf="(alertMessage.alertStatus==='success')">
+    <table *ngIf="messages.length>0" class="table table-striped">
+      <tr *ngFor=" let message of messages">
+        <td>{{message.userName}}</td>
+        <td style="word-break: break-all;">{{message.message}}</td>
+        <td>{{message.messageCreatedAt | date:'medium'}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
