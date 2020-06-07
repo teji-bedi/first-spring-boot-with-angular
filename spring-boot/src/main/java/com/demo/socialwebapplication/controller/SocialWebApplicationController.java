@@ -1,8 +1,9 @@
 package com.demo.socialwebapplication.controller;
 
-import com.demo.socialwebapplication.model.Message;
-import com.demo.socialwebapplication.model.User;
-import com.demo.socialwebapplication.service.SocialWebApplicationService;
+import com.demo.socialwebapplication.model.MessageDto;
+import com.demo.socialwebapplication.model.UserDto;
+import com.demo.socialwebapplication.service.CrudService;
+import io.swagger.annotations.ApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,26 +17,26 @@ import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class MessageController {
+@ApiModel("Social Web Messaging Application Controller")
+public class SocialWebApplicationController {
 
     @Autowired
-    private SocialWebApplicationService service;
+    private CrudService service;
 
     @PostMapping(path = "/postMessage/{userName}")
-    public void postMessage(@PathVariable String userName, @RequestBody String messagePosted) {
-        User user = service.getOrCreateUserByUserName(userName);
-        service.addMessage(user, messagePosted);
+    public void postJpaMessage(@PathVariable String userName, @RequestBody MessageDto messagePosted) {
+        UserDto user = service.getOrCreateUserByUserName(userName);
+        service.saveUserMessage(user, messagePosted);
     }
 
     @GetMapping(path = "/getMessagesByUserName/{userName}")
-    public List<Message> getMessagesByUserName(@PathVariable String userName) {
+    public List<MessageDto> getMessagesByUserName(@PathVariable String userName) {
         return service.getMessagesByUserName(userName);
     }
 
     @GetMapping(path = "/getMessagesFromFollowing/{userName}")
-    public List<Message> getMessagesFromFollowing(@PathVariable String userName) {
-        User user = service.getUserByUserName(userName);
-        return service.getMessagesFromFollowing(user);
+    public List<MessageDto> getMessagesFromFollowing(@PathVariable String userName) {
+        return service.getMessagesFromFollowing(userName);
     }
 
     @PostMapping(path = "/addFollowing/{userName}/{followingUserName}")
@@ -44,17 +45,19 @@ public class MessageController {
     }
 
     @GetMapping(path = "/getAvailableUsersToFollowForUserName/{userName}")
-    public Set<User> getAvailableUsersToFollowForUserName(@PathVariable String userName) {
+    public Set<UserDto> getAvailableUsersToFollowForUserName(@PathVariable String userName) {
         return service.getAvailableUsersToFollowForUserName(userName);
     }
 
     @GetMapping(path = "/checkForValidUserName/{userName}")
-    public boolean checkForValidUserName(@PathVariable String userName) {
+    public Boolean checkForValidUserName(@PathVariable String userName) {
         return service.checkForValidUserName(userName);
     }
 
     @GetMapping(path = "/getAllMessages")
-    public List<Message> getAllMessages() {
+    public List<MessageDto> getAllJpaMessages() {
         return service.getAllMessages();
     }
+
+
 }

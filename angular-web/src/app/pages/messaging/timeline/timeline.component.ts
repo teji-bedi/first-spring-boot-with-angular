@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Message} from "../../../model/message";
-import {SocialWebMessagingService} from "../../social.web.messaging.service";
-import {AlertMessage} from "../../../model/alert.message";
+import {Message} from '../../../model/message';
+import {SocialWebMessagingService} from '../../social.web.messaging.service';
+import {AlertMessage} from '../../../model/alert.message';
 
 @Component({
   selector: 'app-timeline',
@@ -20,6 +20,7 @@ export class TimelineComponent implements OnInit {
   }
 
   getMessagesFromFollowing() {
+    this.alertMessage = new AlertMessage();
     this.messages = [];
     this.alertMessage = new AlertMessage();
     this.alertMessage.alertStatus = 'success';

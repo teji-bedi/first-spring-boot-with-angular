@@ -1,19 +1,18 @@
 package com.demo.socialwebapplication.service;
 
 import com.demo.socialwebapplication.dao.SocialWebApplicationDaoRepository;
-import com.demo.socialwebapplication.model.Message;
-import com.demo.socialwebapplication.model.User;
+import com.demo.socialwebapplication.model.MessageDto;
+import com.demo.socialwebapplication.model.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
 @Service
@@ -22,26 +21,24 @@ public class SocialWebApplicationService {
     @Autowired
     private SocialWebApplicationDaoRepository repository;
 
-    public void addMessage(User user, String postedMessage) {
-        Message message = new Message();
-        message.setUserId(user.getUserId());
-        message.setUserName(user.getUserName());
-        message.setMessageCreatedAt(new Date());
-        message.setMessageId(repository.getMessageCount() + 1);
-        message.setMessage(postedMessage);
+    public void addMessage(UserDto user, String postedMessage) {
+        MessageDto messageDto = new MessageDto();
+        messageDto.setUserId(user.getUserId());
+        messageDto.setMessageId(repository.getMessageCount() + 1);
+        messageDto.setMessage(postedMessage);
 
-        repository.addMessage(message);
+        repository.addMessage(messageDto);
     }
 
-    public List<Message> getAllMessages() {
+    public List<MessageDto> getAllMessages() {
         return repository.getAllMessages();
     }
 
-    public User getUserByUserName(String userName) {
+    public UserDto getUserByUserName(String userName) {
         return repository.getUserByUserName(userName);
     }
 
-    public User getOrCreateUserByUserName(String userName) {
+    public UserDto getOrCreateUserByUserName(String userName) {
         return repository.getOrCreateUserByUserName(userName);
     }
 
@@ -50,47 +47,36 @@ public class SocialWebApplicationService {
         repository.addFollower(userName, followingUserName);
     }
 
-    public List<Message> getMessagesByUserName(String userName) {
-        List<Message> messagesByUserName = repository.getAllMessages().stream().filter(new Predicate<Message>() {
-            @Override
-            public boolean test(Message message) {
-                return message.getUserName().equals(userName);
-            }
-        }).collect(Collectors.toList());
-        return messagesByUserName;
+    public List<MessageDto> getMessagesByUserName(String userName) {
+//        List<MessageDto> messagesByUserName = repository.getAllMessages().stream().filter(message -> message.getUserName().equals(userName)).collect(toList());
+//        return messagesByUserName;
+        return null;
     }
 
-    public List<Message> getMessagesFromFollowing(User user) {
-        if(user==null){
-            return newArrayList();
-        }
-        List<Message> messagesByUserName = repository.getAllMessages().stream().filter(new Predicate<Message>() {
-            @Override
-            public boolean test(Message message) {
-                return user.getFollowingUserNames().contains(message.getUserName());
-            }
-        }).collect(Collectors.toList());
-        return messagesByUserName;
+    public List<MessageDto> getMessagesFromFollowing(UserDto user) {
+//        if(user==null){
+//            return newArrayList();
+//        }
+//        List<MessageDto> messagesByUserName = repository.getAllMessages().stream().filter(message -> user.getFollowingUserNames().contains(message.getUserName())).collect(toList());
+//        return messagesByUserName;
+
+        return null;
     }
 
-    public Set<User> getAvailableUsersToFollowForUserName(String userName) {
-        User sourceUser = repository.getUserByUserName(userName);
-        if(sourceUser==null){
-            return newHashSet();
-        }
-        Set<User> availableUsers = repository.getAllAvailableUsers().stream().filter(new Predicate<User>() {
-            @Override
-            public boolean test(User user) {
-                return !sourceUser.getFollowingUserNames().contains(user.getUserName());
-            }
-        }).collect(toSet());
-        availableUsers.remove(sourceUser);
-
-        return availableUsers;
+    public Set<UserDto> getAvailableUsersToFollowForUserName(String userName) {
+//        UserDto sourceUser = repository.getUserByUserName(userName);
+//        if(sourceUser==null){
+//            return newHashSet();
+//        }
+//        Set<UserDto> availableUsers = repository.getAllAvailableUsers().stream().filter(user -> !sourceUser.getFollowingUserNames().contains(user.getUserName())).collect(toSet());
+//        availableUsers.remove(sourceUser);
+//
+//        return availableUsers;
+        return null;
     }
 
     public boolean checkForValidUserName(String userName) {
-        User user = repository.getUserByUserName(userName);
+        UserDto user = repository.getUserByUserName(userName);
         return user != null;
     }
 }

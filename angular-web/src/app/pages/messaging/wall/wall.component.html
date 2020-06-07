@@ -19,7 +19,7 @@
       </thead>
       <tr *ngFor=" let message of messages">
         <td  style="word-break: break-all;">{{message.message}}</td>
-        <td>{{message.messageCreatedAt | date:'medium'}}</td>
+        <td>{{message.createdAt | date:'medium'}}</td>
       </tr>
     </table>
   </div>

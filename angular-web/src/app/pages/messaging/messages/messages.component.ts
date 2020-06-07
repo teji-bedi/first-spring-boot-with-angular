@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {SocialWebMessagingService} from "../../social.web.messaging.service";
-import {Message} from "../../../model/message";
+import {SocialWebMessagingService} from '../../social.web.messaging.service';
+import {Message} from '../../../model/message';
 
 @Component({
   selector: 'app-messages',

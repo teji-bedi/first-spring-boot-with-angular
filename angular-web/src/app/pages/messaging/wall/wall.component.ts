@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {SocialWebMessagingService} from "../../social.web.messaging.service";
-import {Message} from "../../../model/message";
-import {AlertMessage} from "../../../model/alert.message";
+import {SocialWebMessagingService} from '../../social.web.messaging.service';
+import {Message} from '../../../model/message';
+import {AlertMessage} from '../../../model/alert.message';
 
 @Component({
   selector: 'app-wall',
@@ -20,6 +20,7 @@ export class WallComponent implements OnInit {
   }
 
   getMessagesForUser() {
+    this.alertMessage = new AlertMessage();
     this.messages = [];
     this.alertMessage = new AlertMessage();
     this.alertMessage.alertStatus = 'success';
@@ -36,9 +37,6 @@ export class WallComponent implements OnInit {
         this.alertMessage.alertStatus = 'danger';
       }
     });
-
     return this.messages;
   }
-
-
 }

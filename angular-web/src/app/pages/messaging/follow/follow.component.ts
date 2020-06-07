@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {SocialWebMessagingService} from "../../social.web.messaging.service";
-import {User} from "../../../model/user";
-import {AlertMessage} from "../../../model/alert.message";
+import {SocialWebMessagingService} from '../../social.web.messaging.service';
+import {User} from '../../../model/user';
+import {AlertMessage} from '../../../model/alert.message';
 
 @Component({
   selector: 'app-follow',
@@ -10,7 +10,7 @@ import {AlertMessage} from "../../../model/alert.message";
 export class FollowComponent implements OnInit {
 
   public users: User[] = [];
-  public isUserValid: boolean = true;
+  public isUserValid = true;
   public userName: string;
   public selectedFollowingUserName: string;
   public alertMessage: AlertMessage = new AlertMessage();
@@ -24,6 +24,7 @@ export class FollowComponent implements OnInit {
   }
 
   getAvailableUsersToFollowForUserName() {
+    this.alertMessage = new AlertMessage();
     this.users = [];
     if (!this.userName) {
       this.alertMessage.alertMessage = 'Please Enter User Name';

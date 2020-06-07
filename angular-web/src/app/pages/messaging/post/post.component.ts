@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {SocialWebMessagingService} from "../../social.web.messaging.service";
-import {AlertMessage} from "../../../model/alert.message";
+import {SocialWebMessagingService} from '../../social.web.messaging.service';
+import {AlertMessage} from '../../../model/alert.message';
 
 @Component({
   selector: 'app-post',
@@ -15,15 +15,17 @@ export class PostComponent implements OnInit {
   constructor(public service: SocialWebMessagingService) {
   }
 
-  ngOnInit() {  }
+  ngOnInit() {
+  }
 
   public postMessage() {
-    if(!this.userName){
+    this.alertMessage = new AlertMessage();
+    if (!this.userName) {
       this.alertMessage.alertMessage = 'Please Enter User Name';
       this.alertMessage.alertStatus = 'danger';
-      return
+      return;
     }
-    if(!this.message){
+    if (!this.message) {
       this.alertMessage.alertMessage = 'Please Enter Message';
       this.alertMessage.alertStatus = 'danger';
       return;
